@@ -13,6 +13,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"",
 							"pm.test(\"Status code should be 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
@@ -20,12 +23,15 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							"  var jsonData = pm.response.json();",
+							"  ",
 							"  var jsonData = pm.response.json();",
 							"  var jsonDaCta = pm.response.json();",
 							"console.log(jsonData)",
 							"console.log(jsonData.total)",
 							"console.log(jsonData.data[4].id)",
+							"console.log(jsonData.data[3].id)",
+							"",
+							"pm.environment.set(\"entityid\", \"jsonData.data[3].id\");",
 							"",
 							"pm.test(\"total result should be 12\", function () {",
 							"  ",
@@ -46,12 +52,26 @@
 							"});",
 							"     */",
 							"});",
-							"pm.test(\"Body is correct\", function () {",
-							"    pm.response.to.have.body(\"response_body_string\");",
+							"pm.test(\"Body contains page\", function () {",
+							"    pm.response.to.have.body(\"page\");",
 							"});",
 							"pm.test(\"confirm 12 should be present\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"12\");",
+							"",
+							"",
+							"",
+							"    pm.environment.set(\"variable_key\", \"variable_value\");",
 							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"variable_key\", \"variable_value\");"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -62,15 +82,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://reqres.in/api/users",
-					"protocol": "https",
+					"raw": "{{baseurl}}",
 					"host": [
-						"reqres",
-						"in"
-					],
-					"path": [
-						"api",
-						"users"
+						"{{baseurl}}"
 					]
 				}
 			},
